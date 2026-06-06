@@ -4,7 +4,7 @@
 
 Source and PDF for the **Mru** whitepaper —
 *A Fault-Tolerant Operating System for Thousand-Year Autonomous Operation*, by
-Will Binns. The project lives at [`mru.systems`](https://mru.systems).
+Will Binns. The project lives at [`mru.space`](https://mru.space).
 
 > Software that still runs a thousand years after we're gone.
 
@@ -32,7 +32,7 @@ published radiation, power, and failure models.
 ## Read it
 
 - **PDF:** [`mru.pdf`](./mru.pdf) in this repo, or the canonical copy at
-  [mru.systems/mru-whitepaper.pdf](https://mru.systems/mru-whitepaper.pdf).
+  [mru.space/mru-whitepaper.pdf](https://mru.space/mru-whitepaper.pdf).
 
 ## Repository layout
 
@@ -74,7 +74,7 @@ on use of the name):
                   Thousand-Year Autonomous Operation},
   year         = {2026},
   month        = may,
-  howpublished = {\url{https://mru.systems}},
+  howpublished = {\url{https://mru.space}},
 }
 ```
 
@@ -82,7 +82,7 @@ on use of the name):
 
 Issues and PRs aren't open to the public on this repo, but we'd love to hear from
 you — say hi on X at [@mrusystems](https://x.com/mrusystems) or email
-[contact@mru.systems](mailto:contact@mru.systems).
+[contact@mru.space](mailto:contact@mru.space).
 
 ## License & trademark
 
