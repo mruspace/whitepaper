@@ -53,7 +53,7 @@ governs the **marks** — they cover different things.
 
 We're friendly — just reach out:
 
-- X: [@mrusystems](https://x.com/mrusystems)
+- X: [@mruspace](https://x.com/mruspace)
 - Email: [contact@mru.space](mailto:contact@mru.space)
 
 © Binns Pte. Ltd. All trademark rights reserved.
