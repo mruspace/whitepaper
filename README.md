@@ -6,7 +6,7 @@ Source and PDF for the **Mru** whitepaper —
 *A Fault-Tolerant Operating System for Thousand-Year Autonomous Operation*, by
 Will Binns. The project lives at [`mru.space`](https://mru.space).
 
-> Building systems that still run a thousand years after we're gone.
+> Systems that run a thousand years after we're gone.
 
 ## Abstract
 
