@@ -33,6 +33,8 @@ published radiation, power, and failure models.
 
 - **PDF:** [`mru.pdf`](./mru.pdf) in this repo, or the canonical copy at
   [mru.space/mru-whitepaper.pdf](https://mru.space/mru-whitepaper.pdf).
+- **Archived record:** [Zenodo](https://zenodo.org/records/20579438)
+  ([doi:10.5281/zenodo.20579438](https://doi.org/10.5281/zenodo.20579438)).
 
 ## Repository layout
 
@@ -74,6 +76,7 @@ on use of the name):
                   Thousand-Year Autonomous Operation},
   year         = {2026},
   month        = may,
+  doi          = {10.5281/zenodo.20579438},
   howpublished = {\url{https://mru.space}},
 }
 ```
