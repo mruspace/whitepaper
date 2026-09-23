@@ -1,7 +1,5 @@
 # Mru — Whitepaper
 
-![Repobeats analytics](https://repobeats.axiom.co/api/embed/009cc1162d69ac6e2bf428980838387913874c60.svg "Repobeats analytics image")
-
 Source and PDF for the **Mru** whitepaper —
 *A Fault-Tolerant Operating System for Thousand-Year Autonomous Operation*, by
 Will Binns. The project lives at [`mru.space`](https://mru.space).
