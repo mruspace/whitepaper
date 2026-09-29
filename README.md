@@ -82,8 +82,7 @@ on use of the name):
 ## Questions or contributions
 
 Issues and PRs aren't open to the public on this repo, but we'd love to hear from
-you — say hi on X at [@mruspace](https://x.com/mruspace) or email
-[contact@mru.space](mailto:contact@mru.space).
+you. Email [contact@mru.space](mailto:contact@mru.space).
 
 ## License & trademark
 
