@@ -17,7 +17,7 @@ Will Binns. The project lives at [`mru.space`](https://mru.space).
 
 ## Versions
 
-- **1.1, October 2026** (this branch, not yet archived): adds related work on
+- **1.1, October 2026** (on main, not yet archived on Zenodo): adds related work on
   degradable systems and spacecraft redundancy management, the first evidence
   for the Layer 1 policy (Dusk and the Mru Flight bench), and an errata section
   that lists every change from 1.0 and why.
