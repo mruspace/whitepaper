@@ -17,7 +17,8 @@ Will Binns. The project lives at [`mru.space`](https://mru.space).
 
 ## Versions
 
-- **1.1.1, October 2026** (on main, not yet archived on Zenodo): fixes the
+- **1.1.1, October 2026**: archived on Zenodo,
+  [doi:10.5281/zenodo.23305299](https://doi.org/10.5281/zenodo.23305299). Fixes the
   layout of Figures 4, 5, 7 and 8, four references and one heading, and updates
   the author's email. The text is the same as 1.1.
 - **1.1, October 2026**: archived on Zenodo,
@@ -58,8 +59,8 @@ built.
 
 - **PDF:** [`mru.pdf`](./mru.pdf) in this repo, or the canonical copy at
   [mru.space/mru-whitepaper.pdf](https://mru.space/mru-whitepaper.pdf).
-- **Archived record:** [Zenodo](https://zenodo.org/records/20580927)
-  ([doi:10.5281/zenodo.20580927](https://doi.org/10.5281/zenodo.20580927)).
+- **Archived record:** [Zenodo](https://zenodo.org/records/23305299)
+  ([doi:10.5281/zenodo.23305299](https://doi.org/10.5281/zenodo.23305299)).
   The concept DOI [10.5281/zenodo.20579437](https://doi.org/10.5281/zenodo.20579437)
   always resolves to the latest version.
 
@@ -103,8 +104,8 @@ on use of the name):
                   Thousand-Year Autonomous Operation},
   year         = {2026},
   month        = oct,
-  version      = {1.1},
-  doi          = {10.5281/zenodo.20580927},
+  version      = {1.1.1},
+  doi          = {10.5281/zenodo.23305299},
   howpublished = {\url{https://mru.space}},
 }
 ```
