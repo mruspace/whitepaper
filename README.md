@@ -18,8 +18,8 @@ Will Binns. The project lives at [`mru.space`](https://mru.space).
 ## Versions
 
 - **1.1.1, October 2026** (on main, not yet archived on Zenodo): fixes the
-  layout of Figures 4, 5, 7 and 8, four references and one heading. The text
-  is the same as 1.1.
+  layout of Figures 4, 5, 7 and 8, four references and one heading, and updates
+  the author's email. The text is the same as 1.1.
 - **1.1, October 2026**: archived on Zenodo,
   [doi:10.5281/zenodo.20580927](https://doi.org/10.5281/zenodo.20580927). Adds related work on
   degradable systems and spacecraft redundancy management, the first evidence
