@@ -557,7 +557,7 @@ Shrinking quorum & 132.6 & 20.1\% & \\
 
 Four results follow, each with its limit. Against fixed TMR, the shrinking quorum delivers 1.34$\times$ the useful work (95\% CI 1.33 to 1.35). This assumes no ground support: if a ground team can command the same fallback and support never ends, the gain is 1.00$\times$, and with 50 years of support it is 1.25$\times$. Against a fallback that does not check its last processor, it does 80\% of the work with 1.00\% of the wrong results (95\% CI 0.96\% to 1.04\%); that gap is what self-check buys. Against cold standby with three strings on the same hardware, the nearest model here of dual-string with autonomous switchover, the result depends on how fast an unpowered spare ages, which is not known: cold standby does more useful work below an aging rate of about 0.2 of the powered rate, and less above it. At every aging rate cold standby has more missions with a wrong result. With two strings the shrinking quorum does 1.05$\times$ to 1.49$\times$ the work of cold standby. Finally, the price of the extra work is a small number of wrong results from a lone processor late in life: 20.1\% of missions deliver at least one (95\% CI 19.3\% to 20.9\%), and fixed TMR comes out ahead only if one wrong result costs more than 136 years of useful work (95\% CI 131 to 142). Across a sweep of every uncertain parameter, the gain over fixed TMR stays between 1.11$\times$ and 1.68$\times$. Power, thermal limits and duty cycling are not modeled; Voyager's own limit is power, which Mru does not address today.
 
-\subsection{Measurement: the Bench}
+\subsection{Measurement: The Bench}
 
 The bench runs the decision core inside a demonstration program: three replica processes on one host, a voter, and faults injected in software \cite{flight2026}. Over 10 seeds, three upset rates and five fault schedules, 150 pairs of runs compared the shrinking quorum with fixed TMR on the same faults. None delivered fewer correct results than fixed TMR. With replicas lost, the shrinking quorum delivered 1.25$\times$ to 3.00$\times$ the correct results. The counts were identical on an Apple M4, an Arm Neoverse-N2 and an AMD EPYC 7763.
 
@@ -605,7 +605,7 @@ Version 1.0 (May 2026, doi:10.5281/zenodo.20579438) is archived unchanged. Versi
 \item \textbf{Wording.} Em dashes are replaced, and the processors are called processors.
 \end{enumerate}
 
-Version 1.1.1 (October 2026) corrects the layout of Figures~\ref{fig:stack}, \ref{fig:quorum}, \ref{fig:constitution} and \ref{fig:degradation}. The text is unchanged from version 1.1 (doi:10.5281/zenodo.20580927).
+Version 1.1.1 (October 2026) corrects the layout of Figures~\ref{fig:stack}, \ref{fig:quorum}, \ref{fig:constitution} and \ref{fig:degradation}, the formatting of four references and one heading. The text is unchanged from version 1.1 (doi:10.5281/zenodo.20580927).
 
 \bibliographystyle{ieeetr}
 \bibliography{mru}
