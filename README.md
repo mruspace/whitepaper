@@ -17,7 +17,8 @@ Will Binns. The project lives at [`mru.space`](https://mru.space).
 
 ## Versions
 
-- **1.1, October 2026** (on main, not yet archived on Zenodo): adds related work on
+- **1.1, October 2026**: archived on Zenodo,
+  [doi:10.5281/zenodo.20580927](https://doi.org/10.5281/zenodo.20580927). Adds related work on
   degradable systems and spacecraft redundancy management, the first evidence
   for the Layer 1 policy (Dusk and the Mru Flight bench), and an errata section
   that lists every change from 1.0 and why.
@@ -54,8 +55,10 @@ built.
 
 - **PDF:** [`mru.pdf`](./mru.pdf) in this repo, or the canonical copy at
   [mru.space/mru-whitepaper.pdf](https://mru.space/mru-whitepaper.pdf).
-- **Archived record:** [Zenodo](https://zenodo.org/records/20579438)
-  ([doi:10.5281/zenodo.20579438](https://doi.org/10.5281/zenodo.20579438)).
+- **Archived record:** [Zenodo](https://zenodo.org/records/20580927)
+  ([doi:10.5281/zenodo.20580927](https://doi.org/10.5281/zenodo.20580927)).
+  The concept DOI [10.5281/zenodo.20579437](https://doi.org/10.5281/zenodo.20579437)
+  always resolves to the latest version.
 
 ## Repository layout
 
@@ -96,8 +99,9 @@ on use of the name):
   title        = {Mru: A Fault-Tolerant Operating System for
                   Thousand-Year Autonomous Operation},
   year         = {2026},
-  month        = may,
-  doi          = {10.5281/zenodo.20579438},
+  month        = oct,
+  version      = {1.1},
+  doi          = {10.5281/zenodo.20580927},
   howpublished = {\url{https://mru.space}},
 }
 ```
