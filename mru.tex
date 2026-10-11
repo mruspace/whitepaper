@@ -28,7 +28,7 @@
 \title{Mru\\[0.3cm]
 \large A Fault-Tolerant Operating System for Thousand-Year Autonomous Operation}
 \author{Will Binns \\ \small hello@wbnns.com}
-\date{Version 1.1, October 2026\\ \small Version 1.0, May 2026: doi:10.5281/zenodo.20579438}
+\date{Version 1.1.1, October 2026\\ \small Version 1.1: doi:10.5281/zenodo.20580927. Version 1.0, May 2026: doi:10.5281/zenodo.20579438}
 
 \begin{document}
 
@@ -286,12 +286,12 @@ The architecture is a stack of six layers, each constrained by the physical enve
 \begin{tikzpicture}[>=Stealth, font=\small,
   L/.style={draw, minimum width=8.2cm, minimum height=0.82cm, align=center, font=\footnotesize}]
 
-\node[L, fill=gray!2]  (l5) at (0, 4.35) {\textbf{Layer 5}: Bounded Self-Modification \;\;\scriptsize constitutional governance \;\textit{(not built)}};
-\node[L, fill=gray!4]  (l4) at (0, 3.45) {\textbf{Layer 4}: Interstellar Communication \;\;\scriptsize coding, compression, scheduling \;\textit{(not built)}};
-\node[L, fill=gray!6]  (l3) at (0, 2.55) {\textbf{Layer 3}: Autonomous Science \;\;\scriptsize rule-based decisions, knowledge triage \;\textit{(not built)}};
-\node[L, fill=gray!8]  (l2) at (0, 1.65) {\textbf{Layer 2}: Navigation \& Orientation \;\;\scriptsize star tracking, course correction \;\textit{(not built)}};
-\node[L, fill=gray!12] (l1) at (0, 0.75) {\textbf{Layer 1}: Hardware Consensus \& Health \;\;\scriptsize TMR, scrubbing, cannibalization \;\textit{(partly built)}};
-\node[L, fill=gray!20] (l0) at (0, -0.15) {\textbf{Layer 0}: Survival Kernel \;\;\scriptsize verified interpreter, replicated on FPGA \;\textit{(not built)}};
+\node[L, fill=gray!2]  (l5) at (0, 4.35) {\textbf{Layer 5}: Bounded Self-Modification \;\;\scriptsize constitutional governance};
+\node[L, fill=gray!4]  (l4) at (0, 3.45) {\textbf{Layer 4}: Interstellar Communication \;\;\scriptsize coding, compression, scheduling};
+\node[L, fill=gray!6]  (l3) at (0, 2.55) {\textbf{Layer 3}: Autonomous Science \;\;\scriptsize rule-based decisions, knowledge triage};
+\node[L, fill=gray!8]  (l2) at (0, 1.65) {\textbf{Layer 2}: Navigation \& Orientation \;\;\scriptsize star tracking, course correction};
+\node[L, fill=gray!12] (l1) at (0, 0.75) {\textbf{Layer 1}: Hardware Consensus \& Health \;\;\scriptsize TMR, scrubbing, cannibalization};
+\node[L, fill=gray!20] (l0) at (0, -0.15) {\textbf{Layer 0}: Survival Kernel \;\;\scriptsize verified interpreter, replicated on FPGA};
 
 % Right-margin gradient: adaptability & capability increase toward the apex (arrow points up)
 \draw[->, thick] (4.6, -0.55) -- (4.6, 4.75);
@@ -327,7 +327,7 @@ Layer~1 maintains agreement across redundant nodes and tracks the health of the 
   dead/.style={draw, circle, minimum size=0.7cm, fill=gray!25, text=gray!55, font=\scriptsize}]
 
 % --- Early ---
-\node[font=\bfseries\footnotesize] at (1.5, 2.6) {Early};
+\node[font=\bfseries\footnotesize, anchor=base] at (1.5, 2.5) {Early};
 \node[node] (e1) at (0.7, 1.6) {N};
 \node[node] (e2) at (2.3, 1.6) {N};
 \node[node] (e3) at (1.5, 0.6) {N};
@@ -335,7 +335,7 @@ Layer~1 maintains agreement across redundant nodes and tracks the health of the 
 \node[font=\scriptsize, align=center] at (1.5, -0.2) {full quorum\\[-1pt](TMR, 3 healthy)};
 
 % --- Mid ---
-\node[font=\bfseries\footnotesize] at (5.5, 2.6) {Mid};
+\node[font=\bfseries\footnotesize, anchor=base] at (5.5, 2.5) {Mid};
 \node[node] (m1) at (4.7, 1.6) {N};
 \node[dead] (m2) at (6.3, 1.6) {$\times$};
 \node[node] (m3) at (5.5, 0.6) {N};
@@ -345,7 +345,7 @@ Layer~1 maintains agreement across redundant nodes and tracks the health of the 
 \node[font=\scriptsize, align=center] at (5.7, -0.2) {dual + checkpoint;\\[-1pt]dead node cannibalized $\to$ spare (S)};
 
 % --- Late ---
-\node[font=\bfseries\footnotesize] at (10.0, 2.6) {Late};
+\node[font=\bfseries\footnotesize, anchor=base] at (10.0, 2.5) {Late};
 \node[dead] (l1) at (9.2, 1.6) {$\times$};
 \node[dead] (l2) at (10.8, 1.6) {$\times$};
 \node[node] (l3) at (10.0, 0.6) {N};
@@ -435,7 +435,7 @@ The \textit{constitution} (core objectives, safety constraints, ethical boundari
 \draw[->, densely dashed] (jr) -- node[right, font=\scriptsize] {validate against} (con);
 \draw[->] (jr) -- node[above, font=\scriptsize] {within bounds} (leg);
 \draw[->] (jr) -- node[right, font=\scriptsize] {violates} (rej);
-\draw[->] (leg.south west) to[out=-120, in=-60, looseness=4] node[below, font=\scriptsize] {reversible: rollback on degradation} (leg.south east);
+\draw[->] (leg.south west) to[out=-120, in=-60, looseness=1.6] node[below, font=\scriptsize] {reversible: rollback on degradation} (leg.south east);
 \end{tikzpicture}
 \caption{Bounded self-modification as a constitutional process. A proposed change takes effect only if judicial review finds it within the ranges fixed by the constitution, which is etched in read-only memory and unreachable by any software process. Accepted changes adjust mutable legislation in Tier-1 parameters and remain reversible; violations are rejected and logged. The probe may freely adapt \textit{how} it pursues its mission, but \textit{what} the mission is lies physically beyond its power to rewrite.}
 \label{fig:constitution}
@@ -457,7 +457,7 @@ During \textbf{Transit} (years 0 to roughly 50 and beyond), the probe hibernates
 % Axes
 \draw[->] (0,0) -- (12.4,0);
 \draw[->] (0,0) -- (0,3.7);
-\node[below, font=\scriptsize] at (12.2, 0) {mission time};
+\node[right, font=\scriptsize] at (12.4, 0) {mission time};
 \node[rotate=90, font=\scriptsize] at (-0.35, 1.85) {capability / power};
 
 % Cumulative-science shaded region under the capability curve
@@ -490,7 +490,7 @@ During \textbf{Transit} (years 0 to roughly 50 and beyond), the probe hibernates
 \node[font=\scriptsize, align=center] at (9.3, -0.5) {Survival\\[-2pt]\scriptsize 1--5 W};
 \node[font=\scriptsize, align=center] at (11.0, -0.5) {Beacon\\[-2pt]\scriptsize $<$1 W};
 
-\node[font=\scriptsize, gray] at (6.0, 0.75) {cumulative science (area under curve)};
+\node[font=\scriptsize, gray, fill=gray!12, inner sep=1.5pt] at (6.0, 0.75) {cumulative science (area under curve)};
 
 \end{tikzpicture}
 \caption{The degradation model. A declining power curve (RTG trickle through transit, a solar-harvest spike at arrival, then a long decline) bounds a stepped capability curve across six phases. The objective is not to defend peak capability but to maximize the shaded area: the cumulative useful work extracted across the entire descent.}
@@ -598,12 +598,14 @@ Version 1.0 (May 2026, doi:10.5281/zenodo.20579438) is archived unchanged. Versi
 \begin{enumerate}
 \item \textbf{Prior art.} Version 1.0 did not say that stepping down from three replicas to two to one is established practice. Section~2 now cites JPL's STAR computer, the Space Shuttle's redundancy management, performability and deep-space fault protection, and states that fixed TMR is one baseline among several, not what most spacecraft fly.
 \item \textbf{Validation.} Version 1.0 described the simulation framework of Section~14 in the present tense and said its failure models were calibrated and cross-validated against Voyager. None of that framework is built, and no parameter is calibrated. Section~14 now describes it as planned, and Section~15 reports what exists.
-\item \textbf{Status of the layers.} Version 1.0 did not say which parts exist. Figure~\ref{fig:stack} and Sections~6 and 8 now mark Layers~0 and 2 to 5 as not built and Layer~1 as partly built. The two-replica mode with checkpointing and retry described in Section~8 is not built; the built version compares and runs a known-answer test on a mismatch.
+\item \textbf{Status of the layers.} Version 1.0 did not say which parts exist. Sections~6 and 8 now say that Layers~0 and 2 to 5 are not built and that Layer~1 is partly built. The two-replica mode with checkpointing and retry described in Section~8 is not built; the built version compares and runs a known-answer test on a mismatch.
 \item \textbf{Abstract and conclusion.} Both said the architecture is validated in simulation grounded in published physics. They now say it is to be validated, and that version 1.1 takes the first step for the Layer~1 policy only.
 \item \textbf{New evidence.} Section~15 adds the decision core and the exact scope of its proofs, simulation results against fixed TMR and two autonomous baselines with a per-mission risk metric, bench measurements, and a known-answer test coverage campaign. Against cold standby with spares that barely age, the shrinking quorum does less useful work; the section says so.
 \item \textbf{Open problems.} Section~17 adds common-mode faults, input agreement, replica determinism, test coverage on real hardware, and the command path.
 \item \textbf{Wording.} Em dashes are replaced, and the processors are called processors.
 \end{enumerate}
+
+Version 1.1.1 (October 2026) corrects the layout of Figures~\ref{fig:stack}, \ref{fig:quorum}, \ref{fig:constitution} and \ref{fig:degradation}. The text is unchanged from version 1.1 (doi:10.5281/zenodo.20580927).
 
 \bibliographystyle{ieeetr}
 \bibliography{mru}
