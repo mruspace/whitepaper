@@ -28,7 +28,7 @@
 \title{Mru\\[0.3cm]
 \large A Fault-Tolerant Operating System for Thousand-Year Autonomous Operation}
 \author{Will Binns \\ \small hello@wbnns.com}
-\date{May 2026}
+\date{Version 1.1, October 2026\\ \small Version 1.0, May 2026: doi:10.5281/zenodo.20579438}
 
 \begin{document}
 
@@ -36,7 +36,7 @@
 
 % ===== ABSTRACT =====
 \begin{adjustwidth}{0.5in}{0.5in}
-\noindent\textbf{Abstract.}\quad No software system in human history has been designed to operate for centuries without human intervention. The longest-lived systems we have built---deep-space probes approaching fifty years of service, banking codebases approaching sixty---survive only through continuous human maintenance. An interstellar probe operating for 500 to 1{,}000 years cannot: its hardware is guaranteed to fail, its power to decline, its memory to corrupt, and the light-delay makes human guidance physically impossible. This paper introduces Mru, an open-source operating system that treats this physical decay not as an exceptional fault but as the governing design constraint. I formalize the stance as the \textit{Degradation-First Principle} and derive from it a layered architecture modeled on biological robustness: a minimal, formally verified interpreter, replicated across reconfigurable hardware, that executes behavior encoded as mutable data---the way DNA encodes behavior run by a replicated molecular interpreter. On this kernel I build hardware consensus among failing nodes, knowledge triage, autonomous science, bandwidth-starved communication, and bounded self-modification, validated in simulation grounded in published radiation, power, and failure models. I argue that designing software to outlive its makers is not speculation but a tractable engineering discipline---one the interstellar case makes unavoidable, and a growing class of terrestrial systems increasingly needs.
+\noindent\textbf{Abstract.}\quad No software system in human history has been designed to operate for centuries without human intervention. The longest-lived systems we have built---deep-space probes approaching fifty years of service, banking codebases approaching sixty---survive only through continuous human maintenance. An interstellar probe operating for 500 to 1{,}000 years cannot: its hardware is guaranteed to fail, its power to decline, its memory to corrupt, and the light-delay makes human guidance physically impossible. This paper introduces Mru, an open-source operating system that treats this physical decay not as an exceptional fault but as the governing design constraint. I formalize the stance as the \textit{Degradation-First Principle} and derive from it a layered architecture modeled on biological robustness: a minimal, formally verified interpreter, replicated across reconfigurable hardware, that executes behavior encoded as mutable data---the way DNA encodes behavior run by a replicated molecular interpreter. On this kernel I design hardware consensus among failing nodes, knowledge triage, autonomous science, bandwidth-starved communication, and bounded self-modification, and a plan to validate them in simulation grounded in published radiation, power, and failure models. Version 1.1 adds the first evidence, for one part of one layer: a Monte Carlo simulator of the Layer~1 redundancy policy and a measured prototype of its decision core, both on general-purpose processors. It also adds related work, corrects claims that version 1.0 overstated, and lists every change in an errata section. I argue that designing software to outlive its makers is not speculation but a tractable engineering discipline---one the interstellar case makes unavoidable, and a growing class of terrestrial systems increasingly needs.
 \end{adjustwidth}
 
 % ===== 1. INTRODUCTION =====
@@ -67,6 +67,10 @@ Beyond the orbit of Jupiter, solar power is impractical, and the radioisotope th
 
 The intellectual foundation of Mru's kernel is von Neumann's demonstration that arbitrarily reliable computation can be synthesized from unreliable components through redundancy and multiplexing \cite{vonneumann1956}. Triple modular redundancy formalized one practical realization \cite{lyons1962}, and the modern taxonomy of dependable computing distinguishes the faults, errors, and failures that such schemes must contain \cite{avizienis2004}. The Byzantine Generals problem established the limits of agreement when components may behave arbitrarily \cite{lamport1982}; I argue below that its adversarial threat model is the \textit{wrong} model for a probe whose nodes are damaged rather than malicious.
 
+\subsection{Degradable Systems and Spacecraft Redundancy Management}
+
+Stepping down from three replicas to two to one is not new, and version 1.0 of this paper did not say so clearly enough. JPL's STAR computer replaced failed units from standby spares under its own control, and was designed as the central computer of an outer-planet spacecraft \cite{avizienis1971}. The Space Shuttle managed a redundant set of general-purpose computers that voted to detect and identify two failures, then used comparison and self-test to tolerate a third \cite{sklaroff1976, spector1984}. Meyer's performability measure scores a degradable system by the work it delivers as it loses capacity, which is the figure of merit this paper adopts \cite{meyer1980}. Deep-space fault protection detects faults, responds on board and makes the spacecraft safe, with the ground team deciding the longer-term recovery \cite{rasmussen2008}. Most spacecraft today fly two strings of radiation-hardened processors, with error-correcting memory, watchdogs and this kind of autonomous fault protection. Fixed triple modular redundancy is therefore one baseline among several, not the industry default. What Mru adds is narrower than version 1.0 implied: degradation that continues with no ground team at all, a small decision core whose per-decision behavior is model-checked, and published trade data that compares it against fixed TMR and against autonomous fallback baselines on the same fault histories.
+
 \subsection{Radiation Effects and Reconfigurable Hardware}
 
 Single-event upsets, single-event latchups, and total ionizing dose are the physical mechanisms by which space radiation degrades electronics \cite{normand1996, baumann2005, schwank2008}. Field-programmable gate arrays (FPGAs) offer a uniquely valuable response: their configuration can be scrubbed to repair upsets and, more importantly, their logic can be re-placed onto surviving fabric as gates die---a capability with extensive flight heritage in high-reliability systems \cite{wirthlin2015}. This is the hardware substrate that makes graceful degradation physically real rather than merely aspirational.
@@ -85,7 +89,7 @@ The seL4 microkernel showed that a small, critical software core can be \textit{
 
 \subsection{What Is Missing}
 
-Each tradition above solves a piece of the problem under the assumption that something---a maintainer, a power grid, a replacement part, a ground station---will be replenished. Mru's contribution is to remove every such assumption simultaneously and to ask what architecture survives. The answer, I argue, is not a sum of these techniques but a reorganization of them around a single governing constraint.
+Each tradition above solves a piece of the problem under the assumption that something (a maintainer, a power grid, a replacement part, a ground station) will be replenished. Mru's contribution is to remove every such assumption simultaneously and to ask what architecture survives. The answer, I argue, is not a sum of these techniques but a reorganization of them around a single governing constraint.
 
 % ===== 3. THE MILLENNIAL-SOFTWARE PROBLEM =====
 \section{The Millennial-Software Problem}
@@ -282,12 +286,12 @@ The architecture is a stack of six layers, each constrained by the physical enve
 \begin{tikzpicture}[>=Stealth, font=\small,
   L/.style={draw, minimum width=8.2cm, minimum height=0.82cm, align=center, font=\footnotesize}]
 
-\node[L, fill=gray!2]  (l5) at (0, 4.35) {\textbf{Layer 5} --- Bounded Self-Modification \;\;\scriptsize constitutional governance};
-\node[L, fill=gray!4]  (l4) at (0, 3.45) {\textbf{Layer 4} --- Interstellar Communication \;\;\scriptsize coding, compression, scheduling};
-\node[L, fill=gray!6]  (l3) at (0, 2.55) {\textbf{Layer 3} --- Autonomous Science \;\;\scriptsize rule-based decisions, knowledge triage};
-\node[L, fill=gray!8]  (l2) at (0, 1.65) {\textbf{Layer 2} --- Navigation \& Orientation \;\;\scriptsize star tracking, course correction};
-\node[L, fill=gray!12] (l1) at (0, 0.75) {\textbf{Layer 1} --- Hardware Consensus \& Health \;\;\scriptsize TMR, scrubbing, cannibalization};
-\node[L, fill=gray!20] (l0) at (0, -0.15) {\textbf{Layer 0} --- Survival Kernel \;\;\scriptsize verified interpreter, replicated on FPGA};
+\node[L, fill=gray!2]  (l5) at (0, 4.35) {\textbf{Layer 5} --- Bounded Self-Modification \;\;\scriptsize constitutional governance \;\textit{(not built)}};
+\node[L, fill=gray!4]  (l4) at (0, 3.45) {\textbf{Layer 4} --- Interstellar Communication \;\;\scriptsize coding, compression, scheduling \;\textit{(not built)}};
+\node[L, fill=gray!6]  (l3) at (0, 2.55) {\textbf{Layer 3} --- Autonomous Science \;\;\scriptsize rule-based decisions, knowledge triage \;\textit{(not built)}};
+\node[L, fill=gray!8]  (l2) at (0, 1.65) {\textbf{Layer 2} --- Navigation \& Orientation \;\;\scriptsize star tracking, course correction \;\textit{(not built)}};
+\node[L, fill=gray!12] (l1) at (0, 0.75) {\textbf{Layer 1} --- Hardware Consensus \& Health \;\;\scriptsize TMR, scrubbing, cannibalization \;\textit{(partly built)}};
+\node[L, fill=gray!20] (l0) at (0, -0.15) {\textbf{Layer 0} --- Survival Kernel \;\;\scriptsize verified interpreter, replicated on FPGA \;\textit{(not built)}};
 
 % Right-margin gradient: adaptability & capability increase toward the apex (arrow points up)
 \draw[->, thick] (4.6, -0.55) -- (4.6, 4.75);
@@ -302,7 +306,7 @@ The architecture is a stack of six layers, each constrained by the physical enve
 \label{fig:stack}
 \end{figure}
 
-The remainder of the paper treats each layer in turn, then develops the degradation model that the architecture exists to serve and the simulation framework by which it is validated.
+As of version 1.1, only part of Layer~1 is built: the shrinking quorum and its health record (Section~\ref{sec:evidence}). Layers~0 and 2 to 5 are designs, not software. The remainder of the paper treats each layer in turn, then develops the degradation model that the architecture exists to serve and the simulation framework by which it is to be validated.
 
 % ===== 7. LAYER 0 =====
 \section{Layer 0: The Survival Kernel}
@@ -314,7 +318,7 @@ Two properties make this tractable. First, the kernel is small enough to be \tex
 % ===== 8. LAYER 1 =====
 \section{Layer 1: Hardware Consensus and Health}
 
-Layer~1 maintains agreement across redundant nodes and tracks the health of the entire machine. As argued in Section~3.4, the nodes here are damaged, not adversarial, so the consensus model is optimized for crash and radiation-induced faults rather than malice \cite{avizienis2004}, drawing on the long tradition of structuring systems to contain and recover from component failure \cite{randell1975}. Triple modular redundancy provides the baseline voting mechanism \cite{lyons1962}, but the defining feature is a \textit{dynamic, shrinking quorum}: when the healthy node count falls below three, the system degrades deliberately to dual redundancy with checkpointing, and ultimately to single-node operation with aggressive self-checking. Agreement does not fail at a fixed threshold; it narrows gracefully toward one.
+Layer~1 maintains agreement across redundant nodes and tracks the health of the entire machine. As argued in Section~3.4, the nodes here are damaged, not adversarial, so the consensus model is optimized for crash and radiation-induced faults rather than malice \cite{avizienis2004}, drawing on the long tradition of structuring systems to contain and recover from component failure \cite{randell1975}. Triple modular redundancy provides the baseline voting mechanism \cite{lyons1962}, but the defining feature is a \textit{dynamic, shrinking quorum}: when the healthy node count falls below three, the system degrades deliberately to dual redundancy with checkpointing, and ultimately to single-node operation with aggressive self-checking. Agreement does not fail at a fixed threshold; it narrows gracefully toward one. \textit{Status in version 1.1:} the shrinking quorum, its health record and known-answer diagnosis are built and measured (Section~\ref{sec:evidence}). With two replicas, the built version compares and runs a known-answer test on a mismatch; the checkpointing and retry described here are not built. Memory scrubbing, cannibalization and power accounting are not built.
 
 \begin{figure}[ht]
 \centering
@@ -496,11 +500,11 @@ During \textbf{Transit} (years 0 to roughly 50 and beyond), the probe hibernates
 The quality of this descent is captured by a \textit{Graceful Degradation Index}: the ratio of delivered capability to surviving hardware, where 1.0 denotes optimal use of whatever remains and lower values indicate resources left idle or software that has failed to adapt to its own losses.
 
 % ===== 14. VALIDATION =====
-\section{Validation: The Simulation Framework}
+\section{Validation: The Planned Simulation Framework}
 
-A claim about a thousand years cannot be tested by waiting. Because no physical probe exists, the simulation \textit{is} the product, and its fidelity is the evidence. Mru's simulator is grounded in published physics rather than invented parameters: RTG output follows the measured plutonium-238 decay curve \cite{bennett2006}; radiation is modeled as galactic-cosmic-ray flux producing single-event upsets, single-event latchups, and accumulating total ionizing dose at rates drawn from the literature \cite{normand1996, baumann2005, schwank2008}; thermal behavior tracks waste-heat generation against radiator capacity that erodes over time \cite{gilmore2002}; FPGA fabric loses gates that are mapped out as the kernel is re-placed \cite{wirthlin2015}; and per-bank memory health degrades as cumulative dose pushes error rates past correction thresholds \cite{gerardin2010}.
+A claim about a thousand years cannot be tested by waiting. Because no physical probe exists, the simulation \textit{is} the product, and its fidelity is the evidence. This section describes the planned framework. It is not built. Section~\ref{sec:evidence} reports what exists in version 1.1, which is much narrower. The planned simulator is to be grounded in published physics rather than invented parameters: RTG output follows the measured plutonium-238 decay curve \cite{bennett2006}; radiation is modeled as galactic-cosmic-ray flux producing single-event upsets, single-event latchups, and accumulating total ionizing dose at rates drawn from the literature \cite{normand1996, baumann2005, schwank2008}; thermal behavior tracks waste-heat generation against radiator capacity that erodes over time \cite{gilmore2002}; FPGA fabric loses gates that are mapped out as the kernel is re-placed \cite{wirthlin2015}; and per-bank memory health degrades as cumulative dose pushes error rates past correction thresholds \cite{gerardin2010}.
 
-Onto these physical models a fault-injection engine---applying the established methodology of deliberately injecting faults to measure how a system tolerates them \cite{hsueh1997}---imposes stochastic component death following Weibull distributions calibrated to space-grade electronics \cite{weibull1951}, together with cascading failures through shared thermal mass and power rails. The probe is then exercised against procedurally generated star systems seeded with planted anomalies---ranging from the obvious, an oxygen atmosphere, to the subtle, a trace biosignature at parts per billion---embedded in realistic sensor noise, so that detection performance can be scored against ground truth. Six metrics summarize a run: Mission Score (cumulative scientific value transmitted), Survival Duration, Energy Efficiency (science returned per joule), the Graceful Degradation Index, Decision Quality (were the planted anomalies found, and was noise correctly ignored), and Thermal Compliance. Where possible the models are cross-validated against the nearly fifty years of real degradation telemetry returned by the Voyager spacecraft \cite{kohlhase1977}---the only ground-truth dataset of multi-decade unattended decline that humanity possesses. Accelerated, statistically faithful simulation is not a substitute for evidence in this domain; it is the only form of evidence available, and constructing it rigorously is itself a contribution. Figure~\ref{fig:simulation} shows the overall structure of the framework.
+Onto these physical models a fault-injection engine---applying the established methodology of deliberately injecting faults to measure how a system tolerates them \cite{hsueh1997}---imposes stochastic component death following Weibull distributions, with parameters to be calibrated against data for space-grade electronics \cite{weibull1951}, together with cascading failures through shared thermal mass and power rails. The probe is then exercised against procedurally generated star systems seeded with planted anomalies---ranging from the obvious, an oxygen atmosphere, to the subtle, a trace biosignature at parts per billion---embedded in realistic sensor noise, so that detection performance can be scored against ground truth. Six metrics summarize a run: Mission Score (cumulative scientific value transmitted), Survival Duration, Energy Efficiency (science returned per joule), the Graceful Degradation Index, Decision Quality (were the planted anomalies found, and was noise correctly ignored), and Thermal Compliance. Where possible the models are to be cross-validated against the nearly fifty years of real degradation telemetry returned by the Voyager spacecraft \cite{kohlhase1977}---the only ground-truth dataset of multi-decade unattended decline that humanity possesses. Accelerated, statistically faithful simulation is not a substitute for evidence in this domain; it is the only form of evidence available, and constructing it rigorously is itself a contribution. Figure~\ref{fig:simulation} shows the overall structure of the framework.
 
 \begin{figure}[ht]
 \centering
@@ -517,7 +521,7 @@ Onto these physical models a fault-injection engine---applying the established m
 \draw[->] (star.east) -- (mru);
 \draw[->] (mru) -- (met);
 \end{tikzpicture}
-\caption{The simulation framework. Physics-grounded models of power, radiation, thermal behavior, and hardware decay drive a fault-injection engine and a procedurally generated star system seeded with known anomalies; the full six-layer stack is run against them and scored on six composite metrics. Because no probe can be flown, this accelerated, statistically faithful simulation is the paper's primary form of evidence---cross-validated, where possible, against five decades of Voyager telemetry.}
+\caption{The simulation framework. Physics-grounded models of power, radiation, thermal behavior, and hardware decay drive a fault-injection engine and a procedurally generated star system seeded with known anomalies; the full six-layer stack is run against them and scored on six composite metrics. Because no probe can be flown, this accelerated, statistically faithful simulation is the planned primary form of evidence, to be cross-validated, where possible, against five decades of Voyager telemetry. It is not built; Section~\ref{sec:evidence} reports what is.}
 \label{fig:simulation}
 \end{figure}
 
@@ -544,7 +548,7 @@ Intellectual honesty requires confronting the boundaries of the proposal. Valida
 % ===== 17. CONCLUSION =====
 \section{Conclusion}
 
-Mru begins from a single reorientation: that for a system meant to run for millennia without help, its own decay is not an exceptional fault but the governing condition of its existence. From that Degradation-First Principle, and from the observation that biology already solved unattended robustness through a replicated minimal interpreter executing behavior-as-data, a coherent architecture follows---a verified survival kernel replicated across reconfigurable hardware, hardware consensus that shrinks gracefully rather than failing at a threshold, knowledge triage across a tiered memory hierarchy, rule-based science chosen for its legibility over a thousand years, bandwidth-starved communication that degrades toward a final beacon, and a constitution etched in immutable hardware that bounds adaptation without permitting drift. Because the probe cannot be flown, the architecture is validated where it can be: in simulation grounded in real radiation, power, and failure physics, measured against the only multi-decade record of unattended decline we have.
+Mru begins from a single reorientation: that for a system meant to run for millennia without help, its own decay is not an exceptional fault but the governing condition of its existence. From that Degradation-First Principle, and from the observation that biology already solved unattended robustness through a replicated minimal interpreter executing behavior-as-data, a coherent architecture follows---a verified survival kernel replicated across reconfigurable hardware, hardware consensus that shrinks gracefully rather than failing at a threshold, knowledge triage across a tiered memory hierarchy, rule-based science chosen for its legibility over a thousand years, bandwidth-starved communication that degrades toward a final beacon, and a constitution etched in immutable hardware that bounds adaptation without permitting drift. Because the probe cannot be flown, the architecture is to be validated where it can be: in simulation grounded in real radiation, power, and failure physics, measured against the only multi-decade record of unattended decline we have. Version 1.1 takes the first step, for the Layer~1 policy alone.
 
 The propulsion to send such a probe between the stars does not yet exist. The discipline required to keep one alive once it is sent can be built now. More than that, the same discipline---designing software to outlive its makers, to spend a declining store of capability for maximum cumulative effect, to remain useful while dying---is one a growing number of terrestrial systems already need. The interstellar probe is not a fantasy at the edge of engineering but the clearest possible statement of a problem that is quietly becoming general. Mru is an argument that the problem is tractable, and an open invitation to solve it.
 
@@ -555,7 +559,7 @@ The propulsion to send such a probe between the stars does not yet exist. The di
 \begin{center}
 \footnotesize
 Available at \url{https://mru.space}. \\
-\copyright~2026 Will Binns. Licensed under a Creative Commons Attribution 4.0 International (CC~BY~4.0) License.
+\copyright~Will Binns. Licensed under a Creative Commons Attribution 4.0 International (CC~BY~4.0) License.
 \end{center}
 
 \end{document}
