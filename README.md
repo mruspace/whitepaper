@@ -7,19 +7,28 @@
   </a>
 </p>
 
-# Mru — Whitepaper
+# Mru whitepaper
 
-Source and PDF for the **Mru** whitepaper —
+Source and PDF for the **Mru** whitepaper,
 *A Fault-Tolerant Operating System for Thousand-Year Autonomous Operation*, by
 Will Binns. The project lives at [`mru.space`](https://mru.space).
 
 > Systems that still run a thousand years after we're gone.
 
+## Versions
+
+- **1.1, October 2026** (this branch, not yet archived): adds related work on
+  degradable systems and spacecraft redundancy management, the first evidence
+  for the Layer 1 policy (Dusk and the Mru Flight bench), and an errata section
+  that lists every change from 1.0 and why.
+- **1.0, May 2026**: archived on Zenodo,
+  [doi:10.5281/zenodo.20579438](https://doi.org/10.5281/zenodo.20579438).
+
 ## Abstract
 
 No software system in human history has been designed to operate for centuries
-without human intervention. The longest-lived systems we have built — deep-space
-probes approaching fifty years of service, banking codebases approaching sixty —
+without human intervention. The longest-lived systems we have built (deep-space
+probes approaching fifty years of service, banking codebases approaching sixty)
 survive only through continuous human maintenance. An interstellar probe
 operating for 500 to 1,000 years cannot: its hardware is guaranteed to fail, its
 power to decline, its memory to corrupt, and the light-delay makes human guidance
@@ -30,11 +39,16 @@ physical decay not as an exceptional fault but as the governing design
 constraint. It formalizes the stance as the *Degradation-First Principle* and
 derives a layered architecture modeled on biological robustness: a minimal,
 formally verified interpreter, replicated across reconfigurable hardware, that
-executes behavior encoded as mutable data — the way DNA encodes behavior run by a
-replicated molecular interpreter. On this kernel it builds hardware consensus
+executes behavior encoded as mutable data, the way DNA encodes behavior run by a
+replicated molecular interpreter. On this kernel it designs hardware consensus
 among failing nodes, knowledge triage, autonomous science, bandwidth-starved
-communication, and bounded self-modification, validated in simulation grounded in
-published radiation, power, and failure models.
+communication, and bounded self-modification, with a plan to validate them in
+simulation grounded in published radiation, power, and failure models.
+
+Version 1.1 adds the first evidence, for one part of one layer: a Monte Carlo
+simulator of the Layer 1 redundancy policy and a measured prototype of its
+decision core, both on general-purpose processors. Layers 0 and 2 to 5 are not
+built.
 
 ## Read it
 
@@ -96,8 +110,8 @@ you. Email [contact@mru.space](mailto:contact@mru.space).
 ## License & trademark
 
 - **Whitepaper** (text, figures, and LaTeX/BibTeX source):
-  [CC BY 4.0](./LICENSE) — share and adapt with attribution.
-- The **Mru** name and logo are trademarks — see [TRADEMARK.md](./TRADEMARK.md).
+  [CC BY 4.0](./LICENSE): share and adapt with attribution.
+- The **Mru** name and logo are trademarks. See [TRADEMARK.md](./TRADEMARK.md).
   The code license/CC license cover the work itself, not the brand.
 
 © Binns Pte. Ltd.
