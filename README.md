@@ -122,4 +122,4 @@ you. Email [contact@mru.space](mailto:contact@mru.space).
 - The **Mru** name and logo are trademarks. See [TRADEMARK.md](./TRADEMARK.md).
   The code license/CC license cover the work itself, not the brand.
 
-© Binns Pte. Ltd.
+© Mru Aerospace, Inc.
