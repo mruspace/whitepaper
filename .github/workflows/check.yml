@@ -1,0 +1,27 @@
+name: Check
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  # A new push to a pull request cancels the run for the old commit.
+  group: check-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  pdf:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # A frozen TeX Live from the TeX Live team. The Ubuntu apt mirror was too
+    # slow to install texlive inside the timeout.
+    container: texlive/texlive:TL2025-historic
+    steps:
+      - uses: actions/checkout@v7
+      - run: latexmk -pdf -interaction=nonstopmode -halt-on-error mru.tex
+      # latexmk passes with a missing \ref or \cite. Fail on them here.
+      - run: "! grep -E 'LaTeX Warning: (Reference|Citation) .* undefined' mru.log"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: mru-pdf
+          path: mru.pdf
+          retention-days: 7
